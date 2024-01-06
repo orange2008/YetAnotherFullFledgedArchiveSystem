@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import ffas_barcode as barcode
+import ffas_scanner as scanner
 import json
+import os
 
 def get_camera():
     try:
@@ -36,9 +38,42 @@ def get_camera():
             json.dump(camconfig, f)
     return camindex
 
-def scan():
+def get_scanner():
+    try:
+        with open("scanner_config.json") as f:
+            obj = json.load(f)
+    except:
+        obj = {}
+    try:
+        uri = obj['device_uri']
+    except KeyError:
+        print("Scanners not set up yet.")
+        print("Now setting it up.")
+        # Bruh currently only GNU/Linux with `scanimage` installed is supported.
+        listdev = "scanimage --list-devices"
+        print("+ {}".format(listdev))
+        os.system(listdev)
+        loopstatus = 1
+        while loopstatus:
+            print("\nPlease copy the Device URI here, without quotes nor backticks")
+            uri = input("URI: ")
+            # Check for errors
+            if '`' or "'" or '"' in uri or ":" not in uri:
+                print("Not valid URI.")
+            else:
+                loopstatus = 0
+        scannerconfig = {"device_uri": uri}
+        with open("scanner_config.json", 'w') as f:
+            json.dump(scannerconfig, f)
+    return uri
+
+def scanbarcode():
     camindex = get_camera()
     scanned = barcode.main(camindex)
-    print(scanned)
+    return scanned
 
-scan()
+def scanfromscannner():
+    device_uri = get_scanner()
+    scanner.scanfromscanner(device_uri)
+
+scanfromscannner()
