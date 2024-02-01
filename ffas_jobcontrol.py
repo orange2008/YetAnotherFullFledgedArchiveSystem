@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import ffas_paperarchive as paperarchive
+import ffas_postprocessing as postprocessing
 import os
 
 def newjob():
@@ -38,4 +39,5 @@ def newjob():
     print("DPI: ", dpi)
     print("Scan Mode: ", mode)
     print("-"*20)
+    postprocessing.post_process(str(barcode), int(counter))
     return True

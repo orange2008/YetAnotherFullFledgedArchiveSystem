@@ -9,4 +9,3 @@ def check_os():
         return False
     else:
         return True
-    return True
