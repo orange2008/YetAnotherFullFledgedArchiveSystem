@@ -18,7 +18,7 @@ def calc_sha256sum(filename: str, BUF_SIZE=262144): # Read data as 256 kilobytes
 
 
 def archive(barcode: str):
-    print("Archving and Compressing...")
+    print("Archiving and Compressing...")
     os.system("tar c ./{} | zstd -T0 -1 > {}.tar.zst".format(str(barcode), str(barcode)))
     print("Calculating Hashes...")
     digest = calc_sha256sum("./{}.tar.zst".format(barcode))
