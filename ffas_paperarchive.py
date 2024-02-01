@@ -72,8 +72,8 @@ def scanbarcode():
     scanned = barcode.main(camindex)
     return scanned
 
-def scanfromscannner():
+def scanfromscanner(barcode, counter, parent_directory):
     device_uri = get_scanner()
-    scanner.scanfromscanner(device_uri)
-
-scanfromscannner()
+    filename = str(barcode) + "-" + str(counter) + ".png"
+    scanner.scanfromscanner(device_uri, str(parent_directory) + "/" + str(filename))
+    return filename
