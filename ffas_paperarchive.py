@@ -58,7 +58,7 @@ def get_scanner():
             print("\nPlease copy the Device URI here, without quotes nor backticks")
             uri = input("URI: ")
             # Check for errors
-            if '`' or "'" or '"' in uri or ":" not in uri:
+            if '`' in uri or "'" in uri or '"' in uri or ":" not in uri:
                 print("Not valid URI.")
             else:
                 loopstatus = 0
